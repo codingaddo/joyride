@@ -1,9 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import Joyride, { Step } from "react-joyride";
+import dynamic from 'next/dynamic';
+import type { Step } from "react-joyride";
+
+// Dynamically import Joyride  and disable SSR
+// Another way is to import Joyride directly and use a side effect to delay it before mounting
+const JoyrideComponent = dynamic(() => import('react-joyride'), {
+  ssr: false,
+});
 
 const Tour = () => {
-  const [run, setRun] = useState(true); // Controls the tour state
+  const [run, setRun] = useState(true);
 
   // Define the steps for the tour
   const steps: Step[] = [
@@ -42,7 +49,7 @@ const Tour = () => {
       </div>
 
       {/* React Joyride */}
-      <Joyride
+      <JoyrideComponent
         steps={steps} // Pass the steps
         run={run} // Start the tour
         continuous // Enable automatic transition to the next step
