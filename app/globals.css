@@ -1,23 +1,64 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+
+/* Right-Angle Dotted Arrow */
+[data-tooltip]::before {
+  content: "";
+  position: absolute;
+  top: 50%; /* Align with the center of the tooltip */
+  left: -60px; /* Extend 20px to the right of the tooltip */
+  height: 2px;
+  width: 60px; /* Length of the horizontal dotted line */
+  background: repeating-linear-gradient(
+    to right,
+    #ddd,
+    #ddd 4px,
+    transparent 4px,
+    transparent 8px
+  );
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-tooltip]::after {
+  content: "";
+  position: absolute;
+  top: calc(50% + 5px); /* Move down 20px below the horizontal line */
+  left: -60px; /* Align with the end of the horizontal line */
+  height: 80px; /* Length of the vertical dotted line */
+  width: 2px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #ddd,
+    #ddd 4px,
+    transparent 4px,
+    transparent 8px
+  );
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-} */
+[data-tooltip] .arrowhead {
+  position: absolute;
+  top: calc(50% + 85px); /* Position below the vertical line */
+  left: -66.5px; /* Align with the end of the vertical line */
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #ddd; /* Arrowhead color */
+}
 
-/*  */
+/* Tour highlight and blur effects */
+.box {
+  transition: all 0.3s ease-in-out !important;
+}
+
+.box.active {
+  transform: scale(1.05) !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) !important;
+  z-index: 1000 !important;
+}
+
+body:has(.box.active) .box:not(.active) {
+  filter: blur(2px) !important;
+  opacity: 0.7 !important;
+}
