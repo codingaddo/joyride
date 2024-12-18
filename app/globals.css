@@ -3,6 +3,28 @@
 @tailwind utilities;
 
 
+
+
+
+/* Tour highlight and blur effects */
+.box {
+  transition: all 0.3s ease-in-out !important;
+}
+
+.box.active {
+  transform: scale(1.5) !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) !important;
+  z-index: 1000 !important;
+}
+
+body:has(.box.active) .box:not(.active) {
+  filter: blur(3px) !important;
+  opacity: 0.5 !important;
+}
+
+
+
+/* /////////////////////////////////// */
 /* Right-Angle Dotted Arrow */
 [data-tooltip]::before {
   content: "";
@@ -47,18 +69,4 @@
   border-top: 8px solid #ddd; /* Arrowhead color */
 }
 
-/* Tour highlight and blur effects */
-.box {
-  transition: all 0.3s ease-in-out !important;
-}
 
-.box.active {
-  transform: scale(1.05) !important;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) !important;
-  z-index: 1000 !important;
-}
-
-body:has(.box.active) .box:not(.active) {
-  filter: blur(2px) !important;
-  opacity: 0.7 !important;
-}

@@ -1,14 +1,18 @@
 
 import { TooltipRenderProps } from 'react-joyride';
 
-function CustomTooltip(props: TooltipRenderProps) {
-  const { backProps, closeProps, continuous, index, primaryProps, skipProps, step, tooltipProps } =
+interface CustomTooltipProps extends TooltipRenderProps {
+  isLastIndex:boolean
+}
+
+function CustomTooltip(props: CustomTooltipProps) {
+  const { backProps, closeProps, continuous, index, primaryProps, skipProps, step, tooltipProps,isLastIndex } =
     props;
 
   return (
     <div
-      className="relative bg-white rounded-lg shadow-lg p-4 max-w-[250px] "
-      data-tooltip
+      className="relative bg-white rounded-lg shadow-lg p-4 max-w-[200px] "
+      // data-tooltip
       {...tooltipProps}
     >
       {/* Close Button */}
@@ -50,12 +54,12 @@ function CustomTooltip(props: TooltipRenderProps) {
               className="px-3 py-1 rounded-md text-sm bg-blue-500 text-white hover:bg-blue-600"
               {...primaryProps}
             >
-              Next
+               {isLastIndex ? "Finished" : "Next"}
             </button>
           )}
         </div>
       </div>
-      <div className="arrowhead"></div>
+      {/* <div className="arrowhead"></div> */}
     </div>
   );
 }

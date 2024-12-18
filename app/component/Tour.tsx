@@ -93,6 +93,7 @@ const JoyrideComponent = dynamic(() => import('react-joyride'), { ssr: false });
 
 const Tour = () => {
   const [run, setRun] = useState(true);
+  const [stepIndex, setStepIndex] = useState(0)
 
   // Tour Steps
   const steps: Step[] = [
@@ -113,7 +114,7 @@ const Tour = () => {
   ];
 
   return (
-    <div className="flex justify-center items-center w-full h-screen space-x-4 bg-gray-100">
+    <div className="flex justify-center items-center w-full h-screen gap-4 bg-gray-100">
       {/* Left Box */}
       <div className="left-box box bg-blue-500 text-white p-8 rounded cursor-pointer">
 
@@ -122,7 +123,7 @@ const Tour = () => {
 
       {/* Middle Box */}
       <div className="middle-box box bg-blue-500 text-white p-8 rounded cursor-pointer">
-        <p className="text-sm opacity-80">Middle Box</p>
+        Middle Box
       </div>
 
       {/* Right Box */}
@@ -134,7 +135,8 @@ const Tour = () => {
       {/* React Joyride */}
       <JoyrideComponent
         steps={steps}
-        tooltipComponent={CustomTooltip}
+        // tooltipComponent={CustomTooltip}
+        tooltipComponent={ (props) => <CustomTooltip {...props} isLastIndex={stepIndex === steps.length - 1}/>}
         run={run}
         continuous
         scrollToFirstStep
@@ -143,7 +145,7 @@ const Tour = () => {
         
         styles={{
           options: {
-            arrowColor: "none",
+            arrowColor: "#fff",
             backgroundColor: "#007bff",
             textColor: "#333",
             primaryColor: "#007bff",
@@ -152,9 +154,19 @@ const Tour = () => {
           },
           
         }}
+        // callback={(data) => {
+        //   if (data.status === "finished" || data.status === "skipped") setRun(false);
+        // }}
+
         callback={(data) => {
-          if (data.status === "finished" || data.status === "skipped") setRun(false);
+          const { action, index, status } = data;
+          if (status === "finished" || status === "skipped") {
+            setRun(false);
+          } else if (action === "next" || action === "prev") {
+            setStepIndex(index);
+          }
         }}
+
       />
     </div>
   );
